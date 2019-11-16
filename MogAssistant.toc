@@ -1,0 +1,8 @@
+## Interface: 80200
+## Title: Mog Assistant
+## Notes: Allow to quickly preview items in the collection of appearances with the keyboard.
+## Notes-frFR: Permet de prévisualiser rapidement les items de la collection d'apparences avec le clavier.
+## Author: Meivyn
+## Version: 1.0.0
+
+MogAssistant.lua
