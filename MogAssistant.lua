@@ -74,7 +74,7 @@ end
 local function CanHandleKey(key)
   local isAtTransmogrifier = WardrobeFrame_IsAtTransmogrifier()
 
-  return not isAtTransmogrifier and (key == WARDROBE_PREV_VISUAL_KEY or key == WARDROBE_NEXT_VISUAL_KEY or key == WARDROBE_UP_VISUAL_KEY or key == WARDROBE_DOWN_VISUAL_KEY)
+  return not isAtTransmogrifier and _G.WardrobeCollectionFrame.selectedTab == 1 and (key == WARDROBE_PREV_VISUAL_KEY or key == WARDROBE_NEXT_VISUAL_KEY or key == WARDROBE_UP_VISUAL_KEY or key == WARDROBE_DOWN_VISUAL_KEY)
 end
 
 local function HandleKey(self, key)
