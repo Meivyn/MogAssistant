@@ -10,5 +10,5 @@ Use arrows on the keyboard when the collection of appearances is opened to get s
 
 If you want to help about these issues or if you find new ones, please open an issue on [GitHub](https://github.com/Meivyn/MogAssistant/issues).
 
-- Sometimes there's an error complaining about equipping item when you navigate. I don't have any clue about this.
+- There's an error complaining about equipping item when you navigate through uncollected or unusable items.
 - You can't change more than one page at a time to continue the navigation on the new page.
