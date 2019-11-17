@@ -32,6 +32,8 @@ local function UpdateItems(self)
       if transmogStateAtlas then
         model.TransmogStateTexture:SetAtlas(transmogStateAtlas, true)
         model.TransmogStateTexture:Show()
+      else
+        model.TransmogStateTexture:Hide()
       end
     end
   end
