@@ -1,5 +1,4 @@
 local _G = _G
-local ipairs = ipairs
 local select = select
 
 local C_TransmogCollection_GetAppearanceSourceInfo = C_TransmogCollection.GetAppearanceSourceInfo
@@ -112,7 +111,8 @@ frame:RegisterEvent("ADDON_LOADED")
 frame:SetScript("OnEvent", function(_, event, arg1)
   if event == "ADDON_LOADED" and arg1 == "Blizzard_Collections" then
     _G.WardrobeCollectionFrame:HookScript("OnKeyDown", OnKeyDown)
-    for _, model in ipairs(_G.WardrobeCollectionFrame.ItemsCollectionFrame.Models) do
+    for i = 1, #_G.WardrobeCollectionFrame.ItemsCollectionFrame.Models do
+      local model = _G.WardrobeCollectionFrame.ItemsCollectionFrame.Models[i]
       model:HookScript("OnMouseDown", OnMouseDown)
     end
   end
