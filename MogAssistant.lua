@@ -98,11 +98,13 @@ local function OnKeyDown(self, key)
   end
 end
 
-local function OnMouseDown(self)
+local function OnMouseDown(self, button)
   if WardrobeFrame_IsAtTransmogrifier() then return end
-  PlaySound(SOUNDKIT_UI_TRANSMOG_ITEM_CLICK)
-  DressUp(self:GetParent(), self.visualInfo)
-  UpdateItems(self:GetParent())
+  if button == "LeftButton" then
+    PlaySound(SOUNDKIT_UI_TRANSMOG_ITEM_CLICK)
+    DressUp(self:GetParent(), self.visualInfo)
+    UpdateItems(self:GetParent())
+  end
 end
 
 local frame = CreateFrame("Frame")
