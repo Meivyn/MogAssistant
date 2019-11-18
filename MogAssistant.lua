@@ -5,6 +5,7 @@ local C_TransmogCollection_GetAppearanceSourceInfo = C_TransmogCollection.GetApp
 local C_TransmogCollection_GetIllusionSourceInfo = C_TransmogCollection.GetIllusionSourceInfo
 local CreateFrame = CreateFrame
 local DressUpVisual = DressUpVisual
+local IsModifiedClick = IsModifiedClick
 local PlaySound = PlaySound
 
 local LE_TRANSMOG_TYPE_APPEARANCE = LE_TRANSMOG_TYPE_APPEARANCE
@@ -99,7 +100,7 @@ end
 
 local function OnMouseDown(self, button)
   if WardrobeFrame_IsAtTransmogrifier() then return end
-  if button == "LeftButton" then
+  if button == "LeftButton" and not IsModifiedClick("CHATLINK") then
     PlaySound(SOUNDKIT_UI_TRANSMOG_ITEM_CLICK)
     DressUp(self:GetParent(), self.visualInfo)
     UpdateItems(self:GetParent())
