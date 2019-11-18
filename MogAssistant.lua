@@ -76,26 +76,23 @@ end
 
 local function OnKeyDown(self, key)
   if WardrobeFrame_IsAtTransmogrifier() or self.selectedCollectionTab ~= 1 then return end
-  if key == WARDROBE_PREV_VISUAL_KEY or key == WARDROBE_NEXT_VISUAL_KEY or key == WARDROBE_UP_VISUAL_KEY or key == WARDROBE_DOWN_VISUAL_KEY then
-    self:SetPropagateKeyboardInput(false)
-    local visualIndex = 0
-    local visualsList = self.activeFrame.filteredVisualsList
-    for i = 1, #visualsList do
-      if visualsList[i].visualID == self.activeFrame.selectedVisualID then
-        visualIndex = i
-        break
-      end
+  if not (key == WARDROBE_PREV_VISUAL_KEY or key == WARDROBE_NEXT_VISUAL_KEY or key == WARDROBE_UP_VISUAL_KEY or key == WARDROBE_DOWN_VISUAL_KEY) then return end
+  self:SetPropagateKeyboardInput(false)
+  local visualIndex = 0
+  local visualsList = self.activeFrame.filteredVisualsList
+  for i = 1, #visualsList do
+    if visualsList[i].visualID == self.activeFrame.selectedVisualID then
+      visualIndex = i
+      break
     end
-    visualIndex = WardrobeUtils_GetAdjustedDisplayIndexFromKeyPress(self.activeFrame, visualIndex, #visualsList, key)
-    PlaySound(SOUNDKIT_UI_TRANSMOG_ITEM_CLICK)
-    self.activeFrame.jumpToVisualID = visualsList[visualIndex].visualID
-    self.activeFrame.selectedVisualID = visualsList[visualIndex].visualID
-    self.activeFrame:ResetPage()
-    DressUp(self.activeFrame, visualsList[visualIndex])
-    UpdateItems(self.activeFrame)
-  else
-    self:SetPropagateKeyboardInput(true)
   end
+  visualIndex = WardrobeUtils_GetAdjustedDisplayIndexFromKeyPress(self.activeFrame, visualIndex, #visualsList, key)
+  PlaySound(SOUNDKIT_UI_TRANSMOG_ITEM_CLICK)
+  self.activeFrame.jumpToVisualID = visualsList[visualIndex].visualID
+  self.activeFrame.selectedVisualID = visualsList[visualIndex].visualID
+  self.activeFrame:ResetPage()
+  DressUp(self.activeFrame, visualsList[visualIndex])
+  UpdateItems(self.activeFrame)
 end
 
 local function OnMouseDown(self, button)
