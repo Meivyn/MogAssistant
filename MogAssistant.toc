@@ -3,6 +3,6 @@
 ## Notes: Quickly browse and preview Collection appearances.
 ## Notes-frFR: Parcourir et prévisualiser rapidement les apparences de la Collection.
 ## Author: Meivyn
-## Version: 1.0.0
+## Version: 1.0.1
 
 MogAssistant.lua
