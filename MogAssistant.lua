@@ -75,7 +75,7 @@ local function DressUp(self, visualInfo)
 end
 
 local function OnKeyDown(self, key)
-  if WardrobeFrame_IsAtTransmogrifier() then return end
+  if WardrobeFrame_IsAtTransmogrifier() or _G.WardrobeCollectionFrame.selectedTab ~= 1 then return end
   if key == WARDROBE_PREV_VISUAL_KEY or key == WARDROBE_NEXT_VISUAL_KEY or key == WARDROBE_UP_VISUAL_KEY or key == WARDROBE_DOWN_VISUAL_KEY then
     self:SetPropagateKeyboardInput(false)
     local visualIndex = 0
