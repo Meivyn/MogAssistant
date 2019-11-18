@@ -1,4 +1,5 @@
 local _G = _G
+local ipairs = ipairs
 local select = select
 
 local C_TransmogCollection_GetAppearanceSourceInfo = C_TransmogCollection.GetAppearanceSourceInfo
@@ -97,13 +98,11 @@ local function OnKeyDown(self, key)
   end
 end
 
-local function OnMouseDown(self, button)
+local function OnMouseDown(self)
   if WardrobeFrame_IsAtTransmogrifier() then return end
-  if button == "LeftButton" then
-    PlaySound(SOUNDKIT_UI_TRANSMOG_ITEM_CLICK)
-    DressUp(self:GetParent(), self.visualInfo)
-    UpdateItems(self:GetParent())
-  end
+  PlaySound(SOUNDKIT_UI_TRANSMOG_ITEM_CLICK)
+  DressUp(self:GetParent(), self.visualInfo)
+  UpdateItems(self:GetParent())
 end
 
 local frame = CreateFrame("Frame")
