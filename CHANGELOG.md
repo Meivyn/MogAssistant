@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.3
+- Updated for Shadowlands
+- Fixed an error that appeared when attempting to preview an uncollected or unusable appearance
+
 ## v1.0.2
 - Updated for patch 8.3
 
