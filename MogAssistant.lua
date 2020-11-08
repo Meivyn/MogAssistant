@@ -4,12 +4,13 @@ local select = select
 local C_TransmogCollection_GetAppearanceSourceInfo = C_TransmogCollection.GetAppearanceSourceInfo
 local C_TransmogCollection_GetIllusionSourceInfo = C_TransmogCollection.GetIllusionSourceInfo
 local CreateFrame = CreateFrame
-local DressUpVisual = DressUpVisual
+local DressUpFrame_OnDressModel = DressUpFrame_OnDressModel
+local DressUpFrame_Show = DressUpFrame_Show
 local IsModifiedClick = IsModifiedClick
 local PlaySound = PlaySound
+local SetDressUpBackground = SetDressUpBackground
+local UnitClass = UnitClass
 
-local LE_TRANSMOG_TYPE_APPEARANCE = LE_TRANSMOG_TYPE_APPEARANCE
-local LE_TRANSMOG_TYPE_ILLUSION = LE_TRANSMOG_TYPE_ILLUSION
 local SOUNDKIT_UI_TRANSMOG_ITEM_CLICK = SOUNDKIT.UI_TRANSMOG_ITEM_CLICK
 local WARDROBE_DOWN_VISUAL_KEY = WARDROBE_DOWN_VISUAL_KEY
 local WARDROBE_NEXT_VISUAL_KEY = WARDROBE_NEXT_VISUAL_KEY
@@ -57,18 +58,31 @@ local function UpdateItems(self)
   end
 end
 
+local function DressUpVisual(...)
+  local frame = _G.DressUpFrame
+  local classFilename = select(2, UnitClass("player"))
+
+  SetDressUpBackground(frame, nil, classFilename)
+  DressUpFrame_Show(frame)
+
+  local playerActor = frame.ModelScene:GetPlayerActor()
+  if not playerActor then return end
+
+  playerActor:TryOn(...)
+  DressUpFrame_OnDressModel(frame)
+end
+
 local function DressUp(self, visualInfo)
-  local transmogType = self.transmogType
   local slot = self:GetActiveSlot()
-  if transmogType == LE_TRANSMOG_TYPE_APPEARANCE then
+  if self.transmogLocation:IsAppearance() then
     local sourceID = self:GetAnAppearanceSourceFromVisual(visualInfo.visualID, nil)
     if WardrobeUtils_IsCategoryRanged(self:GetActiveCategory()) or WardrobeUtils_IsCategoryLegionArtifact(self:GetActiveCategory()) then
       slot = nil
     end
     DressUpVisual(sourceID, slot)
     self.selectedVisualID = select(2, C_TransmogCollection_GetAppearanceSourceInfo(sourceID))
-  elseif transmogType == LE_TRANSMOG_TYPE_ILLUSION then
-    local weaponSourceID = WardrobeCollectionFrame_GetWeaponInfoForEnchant(slot)
+  elseif self.transmogLocation:IsIllusion() then
+    local weaponSourceID = WardrobeCollectionFrame_GetWeaponInfoForEnchant(self.transmogLocation)
     DressUpVisual(weaponSourceID, slot, visualInfo.sourceID)
     self.selectedVisualID = C_TransmogCollection_GetIllusionSourceInfo(visualInfo.sourceID)
   end
@@ -79,7 +93,7 @@ local function OnKeyDown(self, key)
   if not (key == WARDROBE_PREV_VISUAL_KEY or key == WARDROBE_NEXT_VISUAL_KEY or key == WARDROBE_UP_VISUAL_KEY or key == WARDROBE_DOWN_VISUAL_KEY) then return end
   self:SetPropagateKeyboardInput(false)
   local visualIndex = 0
-  local visualsList = self.ItemsCollectionFrame.filteredVisualsList
+  local visualsList = self.ItemsCollectionFrame:GetFilteredVisualsList()
   for i = 1, #visualsList do
     if visualsList[i].visualID == self.ItemsCollectionFrame.selectedVisualID then
       visualIndex = i
@@ -87,10 +101,9 @@ local function OnKeyDown(self, key)
     end
   end
   visualIndex = WardrobeUtils_GetAdjustedDisplayIndexFromKeyPress(self.ItemsCollectionFrame, visualIndex, #visualsList, key)
-  PlaySound(SOUNDKIT_UI_TRANSMOG_ITEM_CLICK)
   self.ItemsCollectionFrame.jumpToVisualID = visualsList[visualIndex].visualID
-  self.ItemsCollectionFrame.selectedVisualID = visualsList[visualIndex].visualID
   self.ItemsCollectionFrame:ResetPage()
+  PlaySound(SOUNDKIT_UI_TRANSMOG_ITEM_CLICK)
   DressUp(self.ItemsCollectionFrame, visualsList[visualIndex])
   UpdateItems(self.ItemsCollectionFrame)
 end
