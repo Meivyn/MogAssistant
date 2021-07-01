@@ -1,8 +1,8 @@
-## Interface: 90001
+## Interface: 90100
 ## Title: Mog Assistant
 ## Notes: Quickly browse and preview Collection appearances.
 ## Notes-frFR: Parcourir et prévisualiser rapidement les apparences de la Collection.
 ## Author: Meivyn
-## Version: 1.0.3
+## Version: 1.0.4
 
 MogAssistant.lua
